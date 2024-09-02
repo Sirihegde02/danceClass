@@ -3,6 +3,10 @@ import mongoose from 'mongoose';
 import routes from './src/routes/danceClassRoutes';
 const app = express();
 const PORT = 4000;
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 routes(app);
 
 app.get('/', (req, res) => {
@@ -18,8 +22,8 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/danceClassDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true
+}).then(() => {
+  console.log('Connected to MongoDB');
+}).catch(err => {
+  console.error('Could not connect to MongoDB', err);
 });
-
-app.use(express.json());
-//bodyparser setup
-app.use(bodyParser.urlencoded({ extended: true}));
